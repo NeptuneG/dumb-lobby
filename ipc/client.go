@@ -14,24 +14,24 @@ func NewIpcClient(server *IpcServer) *IpcClient {
 }
 
 func (client *IpcClient) Call(method, params string) (res *Response, err error) {
-	req := &Response{method, params}
-	
+	req := &Request{method, params}
+
 	b, err := json.Marshal(req)
-	
+
 	if err != nil {
 		return
 	}
 
 	client.conn <- string(b)
-	str := <- client.conn // wait for returning
-	
+	str := <-client.conn // wait for returning
+
 	var response Response
-	err =  json.Unmarshal([]byte(str), &response)
+	err = json.Unmarshal([]byte(str), &response)
 	res = &response
 
 	return
 }
 
-func (client * IpcClient) Close() {
+func (client *IpcClient) Close() {
 	client.conn <- "CLOSE"
 }
