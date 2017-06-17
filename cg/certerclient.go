@@ -16,7 +16,7 @@ func (client *CenterClient) AddPlayer(player *Player) error {
 		return err
 	}
 
-	res, err := client.Call("addPlayer", string(b))
+	res, err := client.Call("addplayer", string(b))
 	if err == nil && res.Code == "200" {
 		return nil
 	}

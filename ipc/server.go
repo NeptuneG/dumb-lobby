@@ -36,7 +36,7 @@ func (server *IpcServer) Connect() chan string {
 			request := <-c
 			if request == "CLOSE" {
 				// Close the connection
-				break;
+				break
 			}
 
 			var req Request
@@ -48,7 +48,7 @@ func (server *IpcServer) Connect() chan string {
 			res := server.Handle(req.Method, req.Params)
 
 			b, err := json.Marshal(res)
-			
+
 			c <- string(b)
 		}
 
@@ -56,6 +56,6 @@ func (server *IpcServer) Connect() chan string {
 	}(session)
 
 	fmt.Println("A new session has been created.")
-	
+
 	return session
 }

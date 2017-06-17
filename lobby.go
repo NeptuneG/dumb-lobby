@@ -40,7 +40,7 @@ func Quit(args []string) int {
 func Logout(args []string) int {
 	if len(args) != 2 {
 		fmt.Println("USAGE: logout <username>")
-		return 0
+		return 1
 	}
 
 	centerClient.RemovePlayer(args[1])
@@ -51,19 +51,19 @@ func Logout(args []string) int {
 func Login(args []string) int {
 	if len(args) != 4 {
 		fmt.Println("USAGE: login <username><level><exp>")
-		return 0
+		return 1
 	}
 
 	level, err := strconv.Atoi(args[2])
 	if err != nil {
 		fmt.Println("Invalid Parameter: <level> should be an integer")
-		return 0
+		return 1
 	}
 
 	exp, err := strconv.Atoi(args[3])
 	if err != nil {
 		fmt.Println("Invalid Parameter: <exp> should be an integer")
-		return 0
+		return 1
 	}
 
 	player := cg.NewPlayer()
@@ -74,7 +74,7 @@ func Login(args []string) int {
 	err = centerClient.AddPlayer(player)
 	if err != nil {
 		fmt.Println("Failed to add player", err)
-		return 0
+		return 1
 	}
 
 	return 0
@@ -84,6 +84,7 @@ func ListPlayer(args []string) int {
 	ps, err := centerClient.ListPlayer("")
 	if err != nil {
 		fmt.Println("Failed to list player", err)
+		return 1
 	} else {
 		for i, v := range ps {
 			fmt.Println(i+1, ":", v)
@@ -99,6 +100,7 @@ func Send(args []string) int {
 	err := centerClient.Broadcast(message)
 	if err != nil {
 		fmt.Println("Failed to boardcast message", err)
+		return 1
 	}
 
 	return 0
